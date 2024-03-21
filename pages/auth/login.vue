@@ -3,10 +3,11 @@ definePageMeta({
   layout: "credential",
 });
 
+const router = useRouter();
 const client = useSupabaseClient();
 const email = ref("");
 const password = ref("");
-const success = ref(false);
+const errorMsg = ref("");
 
 //function to sign up
 async function signIn() {
@@ -15,11 +16,16 @@ async function signIn() {
       email: email.value,
       password: password.value,
     });
-    success.value = true;
+
+    if (data.value) {
+      router.push("/admin/dashboard");
+    }
+
     console.log(data, error);
     if (error) throw error;
   } catch (error) {
     console.log(error.message);
+    errorMsg.value = error.message;
   }
 }
 </script>
@@ -34,9 +40,11 @@ async function signIn() {
       <h1 class="text-3xl font-semibold text-gray-700">Sign in</h1>
       <p class="text-gray-500">Sign in to access your account</p>
     </div>
-    <div v-if="success"
-      id="alert-border-3"
-      class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800"
+    <!-- end of header -->
+    <div
+    v-if="errorMsg != ''"
+      id="alert-border-2"
+      class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800"
       role="alert"
     >
       <svg
@@ -50,11 +58,13 @@ async function signIn() {
           d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
         />
       </svg>
-      <div class="ms-3 text-sm font-medium">successfully logged in</div>
+      <div class="ms-3 text-sm font-medium">
+        {{ errorMsg }}
+      </div>
       <button
         type="button"
-        class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
-        data-dismiss-target="#alert-border-3"
+        class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"
+        data-dismiss-target="#alert-border-2"
         aria-label="Close"
       >
         <span class="sr-only">Dismiss</span>
@@ -121,7 +131,7 @@ async function signIn() {
           <button
             type="button"
             @click="signIn"
-            class="w-full px-3 py-4 text-white bg-teal-500 rounded-md hover:bg-teal-600 focus:outline-none duration-100 ease-in-out"
+            class="w-full px-3 py-4 text-white bg-green-800 rounded-md hover:bg-green-900 focus:outline-none duration-100 ease-in-out"
           >
             Sign in
           </button>

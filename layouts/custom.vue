@@ -7,7 +7,7 @@
     if (error) {
       console.error(error);
     }
-    router.push('/login');
+    router.push('/');
   }
 </script>
 <template>

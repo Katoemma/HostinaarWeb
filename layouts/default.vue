@@ -1,10 +1,9 @@
 <template>
-    <div class="h-screen text-white bg-green-100">
-        <h1 class="text-4xl">Default layout</h1>
-        <slot />
-    </div>
-
+  <div
+    class="leading-normal tracking-normal text-indigo-400 bg-cover bg-fixed"
+    style="background-image: url('header.jpg')"
+  >
+    <slot />
+  </div>
 </template>
-<script setup>
-
-</script>
+<script setup></script>
