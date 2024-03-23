@@ -6,5 +6,6 @@
       <NuxtLink to="/login">login</NuxtLink> -->
       <NuxtPage />
     </NuxtLayout>
+    <UNotifications />
   </div>
 </template>

@@ -17,11 +17,11 @@ async function signIn() {
       password: password.value,
     });
 
-    if (data.value) {
+    if (data !== null) {
       router.push("/admin/dashboard");
     }
 
-    console.log(data, error);
+    //console.log(data, error);
     if (error) throw error;
   } catch (error) {
     console.log(error.message);
