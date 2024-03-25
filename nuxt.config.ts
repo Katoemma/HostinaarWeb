@@ -8,7 +8,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ['@nuxtjs/supabase','@nuxt/ui'],
+  modules: ['@nuxtjs/supabase','@nuxt/ui','vue-global-loader/nuxt'],
   supabase: {
     redirect:false,
   }

@@ -1,8 +1,8 @@
 <script setup>
-const client = useSupabaseClient();
-const user = useSupabaseUser();
 const toast = useToast();
-const userDetails = await userDetails();
+const {getUserDetails} = useDetails();
+
+
 
 
 const hostelName = ref("");
@@ -14,7 +14,7 @@ const hostelLocation = ref("");
 //function to create a hostel
 const createHostel = async () => {
   //validate the data
-  console.log(userDetails);
+  console.log(getUserDetails());
   if (
     !hostelName.value ||
     !hostelDescription.value ||
@@ -32,7 +32,24 @@ const createHostel = async () => {
     });
   }else{
     //upload data to supabase
+   // Upload data to Supabase
+   try {
+      // Retrieve user details
+      const userDetails = await getUserDetails();
 
+      // Check if user details exist
+      if (userDetails) {
+        // Log user ID
+        console.log("User ID:", userDetails.id);
+      } else {
+        console.log("User details not available");
+      }
+
+      // Proceed with hostel creation
+      // ...
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
   }
 };
 </script>

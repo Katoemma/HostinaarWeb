@@ -20,7 +20,7 @@ console.log(user.value);
         </a>
 
         <div class="flex w-1/2 justify-end content-center py-3">
-          <NuxtLink to="/myprofile"
+          <NuxtLink to="/admin/dashboard"
             ><span
               class="text-white px-6 py-2 hover:text-teal-400 bg-orange-500 rounded-lg shadow-md border border-white-500"
               >Dashboard</span

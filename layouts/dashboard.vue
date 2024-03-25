@@ -2,6 +2,9 @@
 const router = useRouter();
 const client = useSupabaseClient();
 const user = useSupabaseUser();
+
+const {destroyLoader} = useGlobalLoader();
+
 const signOut = async () => {
   const { error } = await client.auth.signOut();
   if (error) {
@@ -23,6 +26,8 @@ onMounted(() => {
   windsterScript.src = "https://demo.themesberg.com/windster/app.bundle.js";
   document.body.appendChild(windsterScript);
 });
+
+destroyLoader();
 </script>
 <template>
   <div>
@@ -383,7 +388,7 @@ onMounted(() => {
                 </li>
                 <li>
                   <NuxtLink to="/admin/settings"
-                    class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
+                    class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group cursor-pointer"
                   >
                     <svg
                       class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
@@ -421,7 +426,7 @@ onMounted(() => {
                 </a>
                 <span
                   @click="signOut"
-                  class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+                  class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2 cursor-pointer"
                 >
                   <svg
                     class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"

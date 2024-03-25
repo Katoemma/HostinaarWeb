@@ -3,13 +3,108 @@ definePageMeta({
   layout: "credential",
 });
 
-const fullname = ref('');
-const email = ref('');
-const password = ref('');
-const confirmPassword = ref('');
-const role = ref('');
+const supabase = useSupabaseClient();
+const toast = useToast();
 
+const fullname = ref("");
+const email = ref("");
+const password = ref("");
+const confirmPassword = ref("");
+const role = ref("");
 
+const register = async () => {
+  //validate all inputs
+  if (
+    !fullname.value ||
+    !email.value ||
+    !password.value ||
+    !confirmPassword.value ||
+    !role.value
+  ) {
+    // show notifications toast
+    toast.add({
+      title: "Registration Error",
+      description: "All fields are required",
+      status: "error",
+      duration: 5000,
+      color: "red",
+      isClosable: true,
+    });
+  } else if (password.value !== confirmPassword.value) {
+    // show notifications toast
+    toast.add({
+      title: "Registration Error",
+      description: "Passwords do not match",
+      status: "error",
+      duration: 5000,
+      color: "red",
+      isClosable: true,
+    });
+  }
+  //else the names are not two names
+  else if (fullname.value.split(" ").length < 2) {
+    // show notifications toast
+    toast.add({
+      title: "Registration Error",
+      description: "Please enter your full name",
+      status: "error",
+      duration: 5000,
+      color: "red",
+      isClosable: true,
+    });
+  } else {
+    try {
+      const registered = await supabase.auth.signUp({
+        email: email.value,
+        password: password.value,
+      });
+      if (registered.error) {
+        toast.add({
+          title: "Registration Error",
+          description: registered.error.message,
+          status: "error",
+          duration: 5000,
+          color: "red",
+          isClosable: true,
+        });
+      } else {
+        //add the user details to users table
+        const { data, error } = await supabase.from("users").insert({
+          userName: fullname.value,
+          email: email.value,
+          userType: role.value,
+        }).select;
+        if (error) {
+          toast.add({
+            title: "Registration Error",
+            description: error.message,
+            status: "error",
+            duration: 5000,
+            color: "red",
+            isClosable: true,
+          });
+        } else {
+          // show notifications toast
+          toast.add({
+            title: "Registration Success",
+            description: "Registration successful",
+            status: "success",
+            duration: 5000,
+            color: "green",
+            isClosable: true,
+          });
+          //redirect to login page
+          console.log(data)
+          navigateTo("/admin/dashboard");
+        }
+      }
+      console.log(registered);
+    } catch (error) {
+      // show notifications toast
+      console.log(error.message);
+    }
+  }
+};
 </script>
 
 <template>
@@ -70,9 +165,8 @@ const role = ref('');
             v-model="password"
             placeholder="Your password"
             class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-          
-            />
-            {{ password }}
+          />
+          {{ password }}
         </div>
         <div class="mb-2">
           <div class="flex justify-between mb-2">
@@ -131,6 +225,7 @@ const role = ref('');
         </div>
         <div class="mb-6">
           <button
+            @click="register"
             type="button"
             class="w-full px-3 py-4 text-white bg-teal-500 rounded-md hover:bg-teal-600 focus:outline-none duration-100 ease-in-out"
           >
