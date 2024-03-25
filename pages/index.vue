@@ -59,7 +59,7 @@ console.log(isLoggedIn);
         class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden"
       >
         <h1
-          class="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left"
+          class="my-4 text-3xl md:text-5xl lg:text-7xl text-white opacity-75 font-bold leading-tight text-center md:text-left"
         >
           Explore
 
@@ -71,7 +71,7 @@ console.log(isLoggedIn);
           Spaces
         </h1>
         <p
-          class="leading-normal text-base md:text-2xl mb-8 text-center md:text-left"
+          class="leading-normal text-base md:text-2xl lg:text-3xl mb-8 text-center md:text-left"
         >
           Discover a diverse range of student-friendly accommodations
         </p>
