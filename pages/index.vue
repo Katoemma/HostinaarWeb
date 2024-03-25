@@ -2,7 +2,10 @@
 definePageMeta({});
 
 const user = useSupabaseUser();
-console.log(user.value);
+const isLoggedIn =
+  user != null && user.value && user.value.email ? "logged in" : "not logged in";
+
+console.log(isLoggedIn);
 </script>
 <template>
   <div class="h-full">
@@ -19,7 +22,10 @@ console.log(user.value);
           >
         </a>
 
-        <div class="flex w-1/2 justify-end content-center py-3">
+        <div
+          v-if="isLoggedIn == 'logged in'"
+          class="flex w-1/2 justify-end content-center py-8"
+        >
           <NuxtLink to="/admin/dashboard"
             ><span
               class="text-white px-6 py-2 hover:text-teal-400 bg-orange-500 rounded-lg shadow-md border border-white-500"
@@ -27,7 +33,7 @@ console.log(user.value);
             ></NuxtLink
           >
         </div>
-        <div class="flex w-1/2 justify-end content-center">
+        <div v-else class="flex w-1/2 justify-end content-center">
           <NuxtLink to="/auth/login"
             ><span
               class="text-white px-6 py-2 hover:text-teal-400 rounded-lg hover:shadow-md hover:border border-white-500"
@@ -69,8 +75,6 @@ console.log(user.value);
         >
           Discover a diverse range of student-friendly accommodations
         </p>
-
-        
       </div>
 
       <!--Right Col-->
