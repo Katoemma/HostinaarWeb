@@ -1,7 +1,7 @@
 <script setup>
 useSeoMeta({
-  title: "Hostinaar | The Africa's best Students Hostel Booking Mobile App",
-  ogTitle: "Hostinaar | The Africa's best Students Hostel Booking Mobile App",
+  title: "Hostinaar | The Uganda's best Students Hostel Booking Mobile App",
+  ogTitle: "Hostinaar | The Uganda's best Students Hostel Booking Mobile App",
   description:"Discover a diverse range of student-friendly accommodations with Hostinaar. Explore and book student hostels, apartments, and shared spaces conveniently.",
 })
 
