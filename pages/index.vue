@@ -19,6 +19,9 @@ const isLoggedIn =
 console.log(isLoggedIn);
 </script>
 <template>
+  <Head>
+    <meta name="google-site-verification" content="kjrkbY275xfTogtCQAB595RrluL1mTIFozX-tL_oa4U" />
+  </Head>
   <div class="h-full lg:h-screen">
     <!-- Nav -->
     <div class="w-full container mx-auto">

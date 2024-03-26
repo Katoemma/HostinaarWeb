@@ -3,6 +3,12 @@ definePageMeta({
   layout: "credential",
   middleware: ['auth']
 });
+useSeoMeta({
+  title: 'Hostinaar - Create new account to book and create hostels',
+  description: 'Register your account to continue',
+  ogTitle: 'Register',
+  ogDescription: 'Register your account to continue',
+})
 
 const supabase = useSupabaseClient();
 const toast = useToast();
