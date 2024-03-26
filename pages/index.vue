@@ -8,7 +8,7 @@ const isLoggedIn =
 console.log(isLoggedIn);
 </script>
 <template>
-  <div class="h-full">
+  <div class="h-full md:h-screen">
     <!--Nav-->
     <div class="w-full container mx-auto">
       <div class="w-full flex items-center justify-between">
