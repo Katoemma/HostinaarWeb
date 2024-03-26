@@ -70,7 +70,7 @@ destroyLoader();
             </button>
             <a href="#" class="text-xl font-bold flex items-center lg:ml-2.5">
               <img
-                src="https://demo.themesberg.com/windster/images/logo.svg"
+                src="/icon.png"
                 class="h-6 mr-2"
                 alt="Windster Logo"
               />

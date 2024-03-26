@@ -41,6 +41,7 @@ async function signIn() {
   >
     <!-- header -->
     <div class="text-center my-6">
+      <img src="/icon.png" class="mx-auto mb-4" width="72" height="57" alt="hostinaar logo">
       <h1 class="text-3xl font-semibold text-gray-700">Sign in</h1>
       <p class="text-gray-500">Sign in to access your account</p>
     </div>
