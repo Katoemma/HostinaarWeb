@@ -1,9 +1,4 @@
 <script setup>
-useSeoMeta({
-  title: "Hostinaar | The Africa's best Students Hostel Booking Mobile App",
-  ogTitle: "Hostinaar | The Africa's best Students Hostel Booking Mobile App",
-  description:"Discover a diverse range of student-friendly accommodations with Hostinaar. Explore and book student hostels, apartments, and shared spaces conveniently.",
-})
 
 const user = useSupabaseUser();
 const isLoggedIn =
@@ -20,7 +15,9 @@ console.log(isLoggedIn);
 </script>
 <template>
   <Head>
+    <title>Hostinaar | The Africa's best Students Hostel Booking Mobile App</title>
     <meta name="google-site-verification" content="kjrkbY275xfTogtCQAB595RrluL1mTIFozX-tL_oa4U" />
+    <meta name="description" content="Discover a diverse range of student-friendly accommodations with Hostinaar. Explore and book student hostels, apartments, and shared spaces conveniently.">
   </Head>
   <div class="h-full lg:h-screen">
     <!-- Nav -->
