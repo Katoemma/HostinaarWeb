@@ -113,7 +113,7 @@ const register = async () => {
 <template>
   <!-- component -->
   <div
-    class="container sm:mt-40 mt-16 my-auto max-w-md border-2 border-gray-200 p-3 bg-white rounded-lg"
+    class="container md:mt-24 my-auto max-w-md border-2 border-gray-200 p-3 bg-white rounded-lg h-full"
   >
     <!-- header -->
     <div class="text-center my-6">
