@@ -70,7 +70,7 @@ const register = async () => {
         });
       } else {
         //add the user details to usersProfile table
-        const { user, error } = await supabase.from("usersProfile").insert([
+        const { user, error } = await supabase.from("users").insert([
           {
             userName: fullname.value,
             email: email.value,
