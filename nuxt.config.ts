@@ -17,8 +17,11 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ["@nuxtjs/supabase", "@nuxt/ui", "vue-global-loader/nuxt"],
+  modules: ["@nuxtjs/supabase", "@nuxt/ui", "vue-global-loader/nuxt",'@nuxtjs/sitemap',],
   supabase: {
     redirect: false,
   },
+  site:{
+    url: 'https://hostinaar.netlify.app/',
+  }
 });
