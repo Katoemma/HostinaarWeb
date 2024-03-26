@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
   layout: "credential",
+  middleware: ['auth']
 });
 
 const supabase = useSupabaseClient();
@@ -68,12 +69,14 @@ const register = async () => {
           isClosable: true,
         });
       } else {
-        //add the user details to users table
-        const { data, error } = await supabase.from("users").insert({
-          userName: fullname.value,
-          email: email.value,
-          userType: role.value,
-        }).select;
+        //add the user details to usersProfile table
+        const { user, error } = await supabase.from("usersProfile").insert([
+          {
+            userName: fullname.value,
+            email: email.value,
+            userType: role.value,
+          }
+        ]).select();
         if (error) {
           toast.add({
             title: "Registration Error",
@@ -94,11 +97,10 @@ const register = async () => {
             isClosable: true,
           });
           //redirect to login page
-          console.log(data)
           navigateTo("/admin/dashboard");
         }
+        console.log('Inserted User:', user);
       }
-      console.log(registered);
     } catch (error) {
       // show notifications toast
       console.log(error.message);
@@ -106,6 +108,7 @@ const register = async () => {
   }
 };
 </script>
+
 
 <template>
   <!-- component -->
@@ -134,7 +137,6 @@ const register = async () => {
             v-model="fullname"
             class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
           />
-          {{ fullname }}
         </div>
         <div class="mb-6">
           <label
@@ -150,7 +152,6 @@ const register = async () => {
             placeholder="Your email address"
             class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
           />
-          {{ email }}
         </div>
         <div class="mb-6">
           <label
@@ -166,7 +167,6 @@ const register = async () => {
             placeholder="Your password"
             class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
           />
-          {{ password }}
         </div>
         <div class="mb-2">
           <div class="flex justify-between mb-2">
@@ -184,7 +184,6 @@ const register = async () => {
             v-model="confirmPassword"
             class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
           />
-          {{ confirmPassword }}
         </div>
         <div class="flex mb-6 gap-5">
           <div class="flex items-center mb-4">
@@ -220,7 +219,6 @@ const register = async () => {
               Hostel manager
             </label>
           </div>
-          {{ role }}
         </div>
         <div class="mb-6">
           <button

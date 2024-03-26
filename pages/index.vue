@@ -13,7 +13,7 @@ console.log(isLoggedIn);
     <div class="w-full container mx-auto">
       <div class="w-full flex items-center justify-between">
         <a
-          class="flex items-center text-indigo-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
+          class="flex items-center text-indigo-400 px-6 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
           href="#"
         >
           Host<span
@@ -52,7 +52,7 @@ console.log(isLoggedIn);
 
     <!--Main-->
     <div
-      class="container pt-24 md:pt-36 mx-auto flex flex-wrap flex-col md:flex-row items-center"
+      class="container pt-12  mx-auto flex flex-wrap flex-col md:flex-row items-center"
     >
       <!--Left Col-->
       <div

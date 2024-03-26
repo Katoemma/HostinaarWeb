@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
   layout: "credential",
+  middleware:['auth'],
 });
 
 const {displayLoader, isLoading} = useGlobalLoader();
@@ -132,7 +133,7 @@ async function signIn() {
           <button
             type="button"
             @click="signIn"
-            class="w-full px-3 py-4 text-white bg-green-800 rounded-md hover:bg-green-900 focus:outline-none duration-100 ease-in-out"
+            class="w-full px-3 py-4 text-white bg-teal-500 rounded-md hover:bg-teal-600  focus:outline-none duration-100 ease-in-out"
           >
             Sign in
           </button>

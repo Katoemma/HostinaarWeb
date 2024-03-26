@@ -7,7 +7,7 @@ export const useDetails = () => {
 
     try {
       const { data, error } = await supabase
-        .from("users")
+        .from("usersProfile")
         .select("*")
         .eq("email", user.value.email);
 
