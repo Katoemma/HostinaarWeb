@@ -19,7 +19,7 @@ const isLoggedIn =
 console.log(isLoggedIn);
 </script>
 <template>
-  <div class="h-full lg:h-screen">
+  <div class="h-full 2xl:h-screen">
     <!-- Nav -->
     <div class="w-full container mx-auto">
       <div class="w-full flex flex-col items-center justify-between md:flex-row">
@@ -116,14 +116,14 @@ console.log(isLoggedIn);
     <!-- Main -->
     <!--Main-->
     <div
-      class="container pt-12  mx-auto flex flex-wrap flex-col md:flex-row items-center"
+      class="container pt-12 px-7  mx-auto flex flex-wrap flex-col md:flex-row items-center"
     >
       <!--Left Col-->
       <div
         class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden"
       >
         <h1
-          class="my-4 text-3xl md:text-5xl lg:text-7xl text-white opacity-75 font-bold leading-tight text-center md:text-left"
+          class="my-4 xl:text-5xl md:text-3xl lg:text-7xl text-white opacity-75 font-bold leading-tight text-center md:text-left"
         >
           Explore
 
