@@ -1,6 +1,8 @@
 <script setup>
 const toast = useToast();
 const {getUserDetails} = useDetails();
+const supabase = useSupabaseClient(); 
+const user = useSupabaseUser();
 
 
 
@@ -14,7 +16,6 @@ const hostelLocation = ref("");
 //function to create a hostel
 const createHostel = async () => {
   //validate the data
-  console.log(getUserDetails());
   if (
     !hostelName.value ||
     !hostelDescription.value ||
@@ -34,19 +35,32 @@ const createHostel = async () => {
     //upload data to supabase
    // Upload data to Supabase
    try {
-      // Retrieve user details
       const userDetails = await getUserDetails();
 
       // Check if user details exist
       if (userDetails) {
         // Log user ID
-        console.log("User ID:", userDetails.id);
+        console.log("User ID:", userDetails[0]["id"	]);
+        // create the hostel
+        const { data, error } = await supabase.from("HostelsN").insert(
+          { 
+            admin: userDetails[0]["id"],
+            name: hostelName.value,
+            description: hostelDescription.value,
+            phone: hostelContact.value,
+            country: hostelCountry.value,
+            location_url: hostelLocation.value,
+          }
+        ).select();
+        if (error) {
+          console.error("Error creating hostel:", error);
+        } else {
+          console.log("Hostel created successfully:", data);
+        }
       } else {
         console.log("User details not available");
       }
-
-      // Proceed with hostel creation
-      // ...
+     
     } catch (error) {
       console.error("Error fetching user details:", error);
     }
@@ -56,20 +70,15 @@ const createHostel = async () => {
 <template>
   <div class="flex flex-col">
     <div class="mt-5">
-      {{ hostelName }}
-      {{ hostelDescription }}
-      {{ hostelContact }}
-      {{ hostelCountry }}
-      {{ hostelLocation }}
       <div class="form">
         <div class="md:flex flex-row md:space-x-4 w-full text-xs">
           <div class="mb-3 space-y-2 w-full text-xs">
             <label class="font-semibold text-gray-600 py-2"
-              >Company Name <abbr title="required">*</abbr></label
+              >Hostel Name <abbr title="required">*</abbr></label
             >
             <input
               v-model="hostelName"
-              placeholder="Company Name"
+              placeholder="Hostel Name"
               class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
               required="required"
               type="text"

@@ -13,16 +13,22 @@ useSeoMeta({
 const supabase = useSupabaseClient();
 const toast = useToast();
 
-const fullname = ref("");
+const lname = ref("");
+const fname = ref("");
 const email = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 const role = ref("");
+const country = ref("");
+const city= ref("");
+
+const isCountrySelected = ref(false);
 
 const register = async () => {
   //validate all inputs
   if (
-    !fullname.value ||
+    !fname.value ||
+    !lname.value ||
     !email.value ||
     !password.value ||
     !confirmPassword.value ||
@@ -30,8 +36,8 @@ const register = async () => {
   ) {
     // show notifications toast
     toast.add({
-      title: "Registration Error",
-      description: "All fields are required",
+      title: "Missing Fields",
+      description: "Check required fields and try again",
       status: "error",
       duration: 5000,
       color: "red",
@@ -40,20 +46,8 @@ const register = async () => {
   } else if (password.value !== confirmPassword.value) {
     // show notifications toast
     toast.add({
-      title: "Registration Error",
-      description: "Passwords do not match",
-      status: "error",
-      duration: 5000,
-      color: "red",
-      isClosable: true,
-    });
-  }
-  //else the names are not two names
-  else if (fullname.value.split(" ").length < 2) {
-    // show notifications toast
-    toast.add({
-      title: "Registration Error",
-      description: "Please enter your full name",
+      title: "Passwords do not match",
+      description: "Enter matching passwords",
       status: "error",
       duration: 5000,
       color: "red",
@@ -67,7 +61,7 @@ const register = async () => {
       });
       if (registered.error) {
         toast.add({
-          title: "Registration Error",
+          title: "Not successfull",
           description: registered.error.message,
           status: "error",
           duration: 5000,
@@ -76,11 +70,12 @@ const register = async () => {
         });
       } else {
         //add the user details to usersProfile table
-        const { user, error } = await supabase.from("users").insert([
+        const { user, error } = await supabase.from("profile").insert([
           {
-            userName: fullname.value,
+            fName: fname.value,
+            lName: lname.value,
             email: email.value,
-            userType: role.value,
+            role: role.value,
           }
         ]).select();
         if (error) {
@@ -113,14 +108,18 @@ const register = async () => {
     }
   }
 };
+
+//handle country select
+const handleCountrySelect = (selectedCountry) => {
+  console.log(selectedCountry);
+  country.value = selectedCountry;
+}
 </script>
 
 
 <template>
   <!-- component -->
-  <div
-    class="container md:mt-24 my-auto max-w-md border-2 border-gray-200 p-3 bg-white rounded-lg h-full"
-  >
+  <div class="container md:mt-24 my-auto max-w-md border-2 border-gray-200 p-3 bg-white rounded-lg h-full">
     <!-- header -->
     <div class="text-center my-6">
       <NuxtLink to="/">
@@ -132,119 +131,70 @@ const register = async () => {
     <!-- sign-in -->
     <div class="m-6">
       <form class="mb-4">
-        <div class="mb-6">
-          <label
-            for="email"
-            class="block mb-2 text-sm text-gray-600 dark:text-gray-400"
-            >Your Full name</label
-          >
-          <input
-            type="text"
-            name="fullname"
-            id="fullname"
-            placeholder="Your full name"
-            v-model="fullname"
-            class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-          />
+        <div class="flex flex-col md:flex-row md:gap-2">
+          <div class="mb-6">
+            <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">First name</label>
+            <input type="text" name="fullname" id="fname" placeholder="Your first name" v-model="fname"
+              class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
+          </div>
+          <div class="mb-6">
+            <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Last name</label>
+            <input type="text" name="fullname" id="lname" placeholder="Your last name" v-model="lname"
+              class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
+          </div>
         </div>
         <div class="mb-6">
-          <label
-            for="email"
-            class="block mb-2 text-sm text-gray-600 dark:text-gray-400"
-            >Email Address</label
-          >
-          <input
-            type="email"
-            name="email"
-            id="email"
-            v-model="email"
-            placeholder="Your email address"
-            class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-          />
+          <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Email Address</label>
+          <input type="email" name="email" id="email" v-model="email" placeholder="Your email address"
+            class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
         </div>
         <div class="mb-6">
-          <label
-            for="email"
-            class="block mb-2 text-sm text-gray-600 dark:text-gray-400"
-            >Password</label
-          >
-          <input
-            type="password"
-            name="password"
-            id="password"
-            v-model="password"
-            placeholder="Your password"
-            class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-          />
+          <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Password</label>
+          <input type="password" name="password" id="password" v-model="password" placeholder="Your password"
+            class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
         </div>
         <div class="mb-2">
           <div class="flex justify-between mb-2">
-            <label
-              for="cpassword"
-              class="text-sm text-gray-600 dark:text-gray-400"
-              >Confirm Password</label
-            >
+            <label for="cpassword" class="text-sm text-gray-600 dark:text-gray-400">Confirm Password</label>
           </div>
-          <input
-            type="password"
-            name="cpassword"
-            id="cpassword"
-            placeholder="Confirm password"
+          <input type="password" name="cpassword" id="cpassword" placeholder="Confirm password"
             v-model="confirmPassword"
-            class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-          />
+            class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
         </div>
         <div class="flex mb-6 gap-5">
           <div class="flex items-center mb-4">
-            <input
-              id="country-option-1"
-              type="radio"
-              name="countries"
-              value="ST"
+            <input id="country-option-1" type="radio" name="countries" value="ST"
               class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
-              v-model="role"
-            />
-            <label
-              for="country-option-1"
-              class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
+              v-model="role" />
+            <label for="country-option-1" class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               Student
             </label>
           </div>
 
           <div class="flex items-center mb-4">
-            <input
-              id="country-option-2"
-              type="radio"
-              name="countries"
-              value="HM"
-              class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-teal-300"
-              v-model="role"
-            />
-            <label
-              for="country-option-2"
-              class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
+            <input id="country-option-2" type="radio" name="countries" value="HM"
+              class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-teal-300" v-model="role" />
+            <label for="country-option-2" class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               Hostel manager
             </label>
           </div>
         </div>
+
+        <Countrypicker @select="handleCountrySelect($event)"/>
+
+        <Statepicker :country="country"/>
+
         <div class="mb-6">
-          <button
-            @click="register"
-            type="button"
-            class="w-full px-3 py-4 text-white bg-teal-500 rounded-md hover:bg-teal-600 focus:outline-none duration-100 ease-in-out"
-          >
+          <button @click="register" type="button"
+            class="w-full px-3 py-4 text-white bg-teal-500 rounded-md hover:bg-teal-600 focus:outline-none duration-100 ease-in-out">
             Register
           </button>
         </div>
         <p class="text-sm text-center text-gray-400">
           Have an account yet?
           <NuxtLink to="/auth/login">
-            <span
-              class="font-semibold text-indigo-500 focus:text-indigo-600 focus:outline-none focus:underline"
-              >Sign in</span
-            >.
+            <span class="font-semibold text-indigo-500 focus:text-indigo-600 focus:outline-none focus:underline">Sign
+              in</span>.
           </NuxtLink>
         </p>
       </form>

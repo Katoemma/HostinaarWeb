@@ -3,20 +3,9 @@ export const useDetails = () => {
   const supabase = useSupabaseClient();
 
   const getUserDetails = async () => {
-    if (!user.value) return null;
-
-    try {
-      const { data, error } = await supabase
-        .from("users")
-        .select("*")
-        .eq("email", user.value.email);
-
-      if (error) throw error;
-      return data[0]; // Assuming we only have one user with the given email
-    } catch (error) {
-      console.error("Error fetching user details:", error);
-      return null;
-    }
+    const { data, error } = await supabase.from("users").select("*").eq("email", user.value.email);
+    if (error) throw error;
+    return data;
   };
 
   //function to signup user
