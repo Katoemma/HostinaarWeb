@@ -10,18 +10,18 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxt/ui": "^2.14.2",
-    "@supabase/supabase-js": "^2.39.8",
-    "nuxt": "^3.10.2",
-    "vue": "^3.4.19",
-    "vue-global-loader": "^0.9.7",
-    "vue-router": "^4.2.5"
+    "@nuxt/fonts": "^0.10.3",
+    "@nuxt/icon": "^1.10.1",
+    "@nuxtjs/tailwindcss": "^6.12.2",
+    "echarts": "^5.5.1",
+    "nuxt": "^3.14.1592",
+    "nuxt-echarts": "^0.2.4",
+    "vue": "latest",
+    "vue-router": "latest"
   },
   "devDependencies": {
-    "@nuxtjs/sitemap": "^5.1.2",
-    "@nuxtjs/supabase": "^1.1.7",
-    "autoprefixer": "^10.4.17",
-    "postcss": "^8.4.35",
-    "vite-svg-loader": "^5.1.0"
+    "@iconify-json/hugeicons": "^1.2.1",
+    "@iconify-json/mdi-light": "^1.2.1",
+    "@prisma/client": "^6.0.1"
   }
 }
