@@ -72,7 +72,7 @@ const toggleDarkMode = () => {
     <div class="flex items-center justify-between px-4 py-3">
       <!-- Logo -->
       <div class="text-2xl font-bold truncate caveat-regular">
-        <span v-if="!isCollapsed"><img src="/logo.png" alt="Logo" class="h-8 inline" /> Logoipsum</span>
+        <span v-if="!isCollapsed"><img src="/logo.png" alt="Logo" class="h-8 inline" /> Hostinaar</span>
         <span v-else><img src="/logo.png" alt="Logo" class="h-8 inline" /></span>
       </div>
       <!-- Collapse Button -->
